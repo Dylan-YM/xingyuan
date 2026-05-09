@@ -1,0 +1,85 @@
+<view class="page-container">
+  
+ <view class="header-section" style="padding-top: {{paddingTop}}px;">
+    
+    <view class="user-row">
+      <view class="user-info">
+        <view class="avatar">
+          <image class="avatar-img" src="/assets/avatar.png" mode="aspectFill"></image>
+        </view>
+        
+        <view class="user-text-group">
+          <view class="name-line">
+            <text class="name">{{userName}}</text>
+            <view class="btn-clear" bindtap="onClearTap">清除</view>
+          </view>
+          <view class="score-line">
+            <text class="score-star">★</text>
+            <text class="score-num">{{totalScore}}</text>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+    <scroll-view 
+      class="calendar-scroll" 
+      scroll-x="true" 
+      scroll-with-animation="true" 
+      scroll-left="{{scrollLeft}}" 
+      show-scrollbar="false"
+    >
+      <view class="calendar-flex">
+        <view 
+          wx:for="{{dates}}" wx:key="fullDate" 
+          class="date-box {{item.isToday ? 'active' : ''}}"
+          bindtap="onSelectDate" data-index="{{index}}"
+        >
+          <text class="d-num">{{item.day}}</text>
+          <text class="d-week">{{item.week}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+  </view>
+
+  <view class="list-section">
+    <block wx:for="{{categories}}" wx:key="name" wx:for-index="cIdx">
+      <view class="category-header" bindtap="toggleCategory" data-index="{{cIdx}}">
+        <view class="cat-title-group">
+          <text class="cat-name">{{item.name}}</text>
+          <text class="cat-count">({{item.count}})</text>
+        </view>
+        <view class="cat-arrow {{item.expanded ? 'up' : 'down'}}"></view>
+      </view>
+
+     <view class="task-list" wx:if="{{item.expanded}}">
+        <view class="task-card" wx:for="{{item.tasks}}" wx:for-item="task" wx:for-index="tIdx" wx:key="title">
+          
+          <view class="card-left">
+            <view class="icon-circle" style="background-color: {{task.iconColor}};">
+              <text class="icon-face">☺</text>
+            </view>
+            <text class="task-title">{{task.title}}</text>
+          </view>
+
+          <view class="card-right">
+            <text class="status-face {{item.name === '批评' ? 'face-red' : 'face-gray'}}">☺</text>
+            
+            <view class="star-group">
+              <text class="star {{task.rating >= 1 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="1">★</text>
+              <text class="star {{task.rating >= 2 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="2">★</text>
+              <text class="star {{task.rating >= 3 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="3">★</text>
+            </view>
+          </view>
+          
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="fab-add" bindtap="onAddTap">
+    <text class="fab-icon">+</text>
+  </view>
+
+</view>

@@ -1,0 +1,60 @@
+<view class="page-container">
+  
+ <view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      
+      <view class="nav-left" bindtap="onBack">
+        <view class="back-btn">
+          <view class="chevron-left"></view>
+        </view>
+      </view>
+      
+      <view class="nav-title">导入目标</view>
+      
+      <view class="nav-right"></view>
+    </view>
+  </view>
+
+  <scroll-view class="tab-scroll" scroll-x show-scrollbar="{{false}}">
+    <view class="tab-list">
+      <view 
+        wx:for="{{categories}}" wx:key="*this"
+        class="tab-item {{currentCategory === item ? 'tab-active' : ''}}"
+        bindtap="onTabClick" data-cat="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <scroll-view class="grid-scroll" scroll-y>
+    <view class="grid-container">
+     <view 
+        wx:for="{{listData}}" wx:key="title"
+        class="grid-item {{item.isExisting ? 'disabled-item' : ''}}"
+        bindtap="onItemClick" data-index="{{index}}"
+      >
+        <view class="icon-box {{item.isSelected ? 'selected' : ''}}" style="color: {{item.hexColor}}; border-color: {{item.isExisting ? '#E5E5EA' : item.hexColor}};">
+          <text class="icon-mock" style="color: {{item.isExisting ? '#C7C7CC' : item.hexColor}};">{{item.title[0]}}</text>
+          
+          <view class="selected-overlay" wx:if="{{item.isSelected}}">
+            <icon type="success" size="24" color="#34C759" />
+          </view>
+
+          <view class="existing-overlay" wx:if="{{item.isExisting}}">
+            <text class="existing-txt">已加</text>
+          </view>
+        </view>
+        
+        <text class="item-title">{{item.title}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+<view class="bottom-bar">
+    <text class="count-text">已选择 {{selectedItems.length}} 个目标</text>
+    
+    <view class="btn-confirm {{selectedItems.length > 0 ? 'active' : ''}}" bindtap="onConfirm">确定</view>
+  </view>
+
+</view>

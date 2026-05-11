@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/import/index",
-    "pages/logs/logs",
+    "pages/logs/index",
     "pages/template/index",
     "pages/create/index"
   ],

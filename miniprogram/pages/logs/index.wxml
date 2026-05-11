@@ -1,0 +1,27 @@
+<view class="page-container">
+  <view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="onBack">
+        <view class="back-btn">
+          <view class="chevron-left"></view>
+        </view>
+      </view>
+      <text class="nav-title">积分明细</text>
+      <view class="nav-right"></view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="log-list">
+    <view class="log-item" wx:for="{{history}}" wx:key="index">
+      <view class="log-left">
+        <text class="log-title">{{item.title}}</text>
+        <text class="log-time">{{item.date}} {{item.time}}</text>
+      </view>
+      <view class="log-right {{item.type === 'add' ? 'plus' : 'minus'}}">
+        {{item.type === 'add' ? '+' : ''}}{{item.amount}}
+      </view>
+    </view>
+    
+    <view class="empty-tip" wx:if="{{history.length === 0}}">暂无积分记录</view>
+  </scroll-view>
+</view>

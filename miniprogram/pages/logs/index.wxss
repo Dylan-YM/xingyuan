@@ -1,0 +1,103 @@
+page {
+  background-color: #F8F9FA;
+  height: 100vh;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* --- 自定义导航栏样式 --- */
+.custom-nav {
+  background-color: #F8F9FA;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.nav-content {
+  height: 44px; /* 微信标准导航栏高度 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20rpx;
+}
+
+.nav-left, .nav-right {
+  width: 100rpx;
+}
+
+.back-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 绘制精致的返回箭头 */
+.chevron-left {
+  width: 20rpx;
+  height: 20rpx;
+  border-top: 4rpx solid #000;
+  border-left: 4rpx solid #000;
+  transform: rotate(-45deg);
+  border-top-left-radius: 2rpx;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #000;
+}
+
+/* --- 列表样式 --- */
+.log-list {
+  flex: 1;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+}
+
+.log-item {
+  background: #fff;
+  padding: 34rpx 30rpx;
+  border-radius: 24rpx;
+  margin-bottom: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.03);
+}
+
+.log-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.log-time {
+  font-size: 24rpx;
+  color: #B0B0B5;
+}
+
+.log-right {
+  font-size: 38rpx;
+  font-weight: bold;
+}
+
+.plus { color: #34C759; }
+.minus { color: #FF3B30; }
+
+.empty-tip {
+  text-align: center;
+  color: #C7C7CC;
+  margin-top: 150rpx;
+  font-size: 28rpx;
+}

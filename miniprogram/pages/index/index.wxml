@@ -1,33 +1,4 @@
 <view class="page-container">
-  <view class="half-screen-mask" wx:if="{{showAddMenu}}"></view>
-<view class="half-screen-menu {{showAddMenu ? 'show' : ''}}">
-  <view class="menu-header">
-    <text class="menu-title">写任务</text>
-    <view class="date-picker-mini">〈 5月9日 〉</view>
-  </view>
-  
-  <view class="ai-input-box">
-    <input placeholder="写下今日重要任务" />
-    <view class="ai-btn">AI识别</view>
-  </view>
-
-  <view class="menu-grid">
-    <view class="menu-item" bindtap="navToCreate">
-      <view class="menu-icon flag"></view>
-      <text>添加目标</text>
-    </view>
-    <view class="menu-item" bindtap="navToImport">
-      <view class="menu-icon download"></view>
-      <text>导入目标</text>
-    </view>
-    <view class="menu-item">
-      <view class="menu-icon heart"></view>
-      <text>添加心愿</text>
-    </view>
-  </view>
-  
-  <!-- <view class="close-btn" bindtap="toggleAddMenu">×</view> -->
-</view>
  <view class="header-section" style="padding-top: {{paddingTop}}px;">
     
     <view class="user-row">
@@ -41,10 +12,11 @@
             <text class="name">{{userName}}</text>
             <view class="btn-clear" bindtap="onClearTap">清除</view>
           </view>
-          <view class="score-line">
-            <text class="score-star">★</text>
-            <text class="score-num">{{totalScore}}</text>
-          </view>
+        <view class="score-line" bindtap="onScoreTap">
+  <text class="score-star">★</text>
+  <text class="score-num">{{totalScore}}</text>
+  <text style="font-size: 24rpx; color: #B0B0B5; margin-left: 10rpx;">明细 〉</text>
+</view>
         </view>
 
       </view>
@@ -110,5 +82,38 @@
   <view class="fab-add" bindtap="onAddTap">
     <text class="fab-icon">+</text>
   </view>
+<view class="half-screen-mask {{showAddMenu ? 'show' : ''}}" bindtap="toggleAddMenu"></view>
+  
+  <view class="half-screen-menu {{showAddMenu ? 'show' : ''}}">
+    <view class="menu-header">
+      <text class="menu-title">写任务</text>
+      <view class="date-picker-mini">〈 5月9日 〉</view>
+    </view>
+    
+    <view class="ai-input-box">
+      <input placeholder="写下今日重要任务" placeholder-class="ai-placeholder" />
+      <view class="ai-btn"><text class="ai-icon">◗</text> AI识别</view>
+    </view>
 
+    <text class="menu-subtitle">养习惯</text>
+
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="navToCreate">
+        <view class="menu-icon-box"><text class="m-icon">⚑</text></view>
+        <text>添加目标</text>
+      </view>
+      <view class="menu-item" bindtap="navToImport">
+        <view class="menu-icon-box"><text class="m-icon">↓</text></view>
+        <text>导入目标</text>
+      </view>
+      <view class="menu-item" bindtap="navToWish">
+        <view class="menu-icon-box"><text class="m-icon">♡</text></view>
+        <text>添加心愿</text>
+      </view>
+    </view>
+    
+    <view class="close-area">
+      <view class="close-btn-circle" bindtap="toggleAddMenu">×</view>
+    </view>
+  </view>
 </view>

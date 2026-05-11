@@ -49,22 +49,11 @@ Page({
       return;
     }
 
-    let sections = StorageManager.load(this.data.dateStr);
-    const secIdx = sections.findIndex((s: any) => s.name === this.data.category);
-    
-    if (secIdx > -1) {
-      // 避免重复添加
-      const isExist = sections[secIdx].tasks.some((t: any) => t.title === this.data.title);
-      if (!isExist) {
-        sections[secIdx].tasks.push({
-          title: this.data.title,
-          iconColor: this.data.hexColor,
-          rating: 0
-        });
-        sections[secIdx].count = sections[secIdx].tasks.length;
-        StorageManager.save(sections, this.data.dateStr);
-      }
-    }
+    // 💡 核心修改：不再只存一天，而是调用全局添加方法，让所有日期都能看到
+    StorageManager.addGlobalTask(this.data.category, {
+      title: this.data.title,
+      iconColor: this.data.hexColor
+    });
 
     wx.showToast({ title: '添加成功', icon: 'success' });
     setTimeout(() => {

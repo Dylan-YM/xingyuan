@@ -89,11 +89,15 @@ Page({
   },
   // 任务打分
   onRate(e: WechatMiniprogram.TouchEvent) {
+
+    
     const { cidx, tidx, val } = e.currentTarget.dataset;
     const categories = this.data.categories;
     const task = categories[cidx].tasks[tidx];
     const scoreVal = Number(val);
 
+
+    
     // 如果已经打过分了，阻止重复打分
     if (task.rating > 0) return; 
 
@@ -102,31 +106,28 @@ Page({
     // 判断当前是否是批评分类
     const isCriticism = categories[cidx].name === '批评';
     let newTotal = this.data.totalScore;
-
-    if (isCriticism) {
-      // 1. 扣分逻辑
-      newTotal -= scoreVal;
-      
-      // 2. 负面反馈：提示扣分 + 较重的震动
-      wx.showToast({
-        title: `积分 -${scoreVal}`,
-        icon: 'error', // 微信原生 error 图标
-        duration: 1200
-      });
-      wx.vibrateShort({ type: 'heavy' }); // 重震动
-      
-    } else {
-      // 1. 加分逻辑
-      newTotal += scoreVal;
-      
-      // 2. 正面反馈：提示加分 + 轻快的震动
-      wx.showToast({
-        title: `积分 +${scoreVal}`,
-        icon: 'success', // 微信原生 success 图标
-        duration: 1200
-      });
-      wx.vibrateShort({ type: 'light' }); // 轻震动
-    }
+// 记录日志的核心逻辑
+const now = new Date();
+const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+if (isCriticism) {
+  newTotal -= scoreVal;
+  StorageManager.addScoreLog({
+    title: task.title,
+    amount: -scoreVal,
+    date: this.data.currentDateStr,
+    time: timeStr,
+    type: 'sub'
+  });
+} else {
+  newTotal += scoreVal;
+  StorageManager.addScoreLog({
+    title: task.title,
+    amount: scoreVal,
+    date: this.data.currentDateStr,
+    time: timeStr,
+    type: 'add'
+  });
+}
 
     // 保存到本地并更新UI
     StorageManager.save(categories, this.data.currentDateStr);
@@ -135,21 +136,24 @@ Page({
     this.setData({ categories, totalScore: newTotal });
   },
 
-  // 悬浮加号点击，跳转导入页 (必须带上当前的日期过去！)
-  onAddTap() {
-    showAddMenu: !this.data.showAddMenu
-    // wx.navigateTo({
-    //   url: `/pages/import/index?date=${this.data.currentDateStr}`
-    // });
-  },navToCreate() {
-    // 跳转前先把菜单关掉，体验更好
-    this.setData({ showAddMenu: false }); 
-    wx.navigateTo({
-      url: `/pages/template/index` // 跳转到第二步的选择模板页
+  toggleAddMenu() {
+    this.setData({
+      showAddMenu: !this.data.showAddMenu
     });
   },
 
-  // 4. 菜单项：去目标库导入（带上当前日期）
+  // 悬浮加号点击
+  onAddTap() {
+    this.toggleAddMenu();
+  },
+
+  navToCreate() {
+    this.setData({ showAddMenu: false }); 
+    wx.navigateTo({
+      url: `/pages/template/index`
+    });
+  },
+
   navToImport() {
     this.setData({ showAddMenu: false });
     wx.navigateTo({
@@ -157,6 +161,13 @@ Page({
     });
   },
 
+  navToWish() {
+    this.setData({ showAddMenu: false });
+    wx.showToast({ title: '心愿功能开发中', icon: 'none' });
+  },
+  onScoreTap() {
+    wx.navigateTo({ url: '/pages/logs/index' });
+  },
   // 展开/收缩分类
   toggleCategory(e: WechatMiniprogram.TouchEvent) {
     const index = e.currentTarget.dataset.index;

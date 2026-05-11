@@ -1,0 +1,95 @@
+<view class="page-container">
+  <view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="onBack">
+        <view class="circle-back"><text>〈</text></view>
+      </view>
+      <view class="nav-title">创建目标</view>
+      <view class="nav-right"></view> </view>
+  </view>
+
+  <scroll-view class="form-scroll" scroll-y>
+    
+    <view class="icon-lib-section">
+      <view class="icon-selector">
+        <view class="selected-icon-ring">
+          <view class="icon-big" style="background-color: {{hexColor}}20;">
+            <text class="icon-mock" style="color: {{hexColor}};">{{title[0] || '?'}}</text>
+            <view class="camera-badge"><icon type="camera" size="10" color="#fff"/></view>
+          </view>
+        </view>
+        <view class="icon-big gray-icon"><text>文</text></view>
+      </view>
+      <view class="lib-btn">目标库 〉</view>
+    </view>
+
+    <view class="card-box card-input">
+      <view class="input-row">
+        <input class="title-input" placeholder="输入目标名称" value="{{title}}" bindinput="onTitleInput" />
+        <picker mode="selector" range="{{categoriesList}}" bindchange="onCategoryChange">
+          <view class="cat-picker">{{category}} ∨</view>
+        </picker>
+      </view>
+      <view class="add-desc">+ 添加描述</view>
+    </view>
+
+    <view class="card-box card-score">
+      <view class="score-header">
+        <view class="segment-ctrl">
+          <view class="seg-item {{scoreType === 0 ? 'active' : ''}}" bindtap="onScoreTypeChange" data-type="0">自由评分</view>
+          <view class="seg-item {{scoreType === 1 ? 'active' : ''}}" bindtap="onScoreTypeChange" data-type="1">固定评分</view>
+        </view>
+        <icon type="info" size="16" color="#C7C7CC" class="info-icon" />
+      </view>
+      <view class="stars-preview">
+        <text class="gray-face">☺</text>
+        <text class="gray-star">☆ ☆ ☆</text>
+      </view>
+    </view>
+
+    <view class="card-box card-settings">
+      <view class="set-item">
+        <text class="set-label">重复</text>
+        <text class="set-value">周一、周二、周三等7天 〉</text>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">时段</text>
+        <text class="set-value hint">未设置</text>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">计时</text>
+        <text class="set-value hint">未设置</text>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">打卡周期</text>
+        <text class="set-value hint">未设置</text>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">限制打卡次数 <icon type="info" size="14" color="#C7C7CC"/></text>
+        <text class="set-value hint">未设置</text>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">每天多次打卡</text>
+        <switch color="#34C759" style="transform:scale(0.8);"/>
+      </view>
+      <view class="set-divider"></view>
+      <view class="set-item">
+        <text class="set-label">计划 <icon type="info" size="14" color="#C7C7CC"/></text>
+        <view class="plan-tag-wrap">
+          <text class="plan-tag">常</text>
+          <text class="set-value">日常计划 〉</text>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <view class="btn-add" bindtap="onAdd">添加</view>
+  </view>
+</view>

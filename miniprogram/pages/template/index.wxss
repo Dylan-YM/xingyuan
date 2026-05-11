@@ -1,0 +1,28 @@
+/* 引入公共基础样式，由于篇幅，保留核心不同的地方 */
+page { background: #fff; height: 100vh; display: flex; flex-direction: column; }
+.page-container { display: flex; flex-direction: column; height: 100vh; }
+/* ... 导航栏、Tab、Grid 同 import/index.wxss ... */
+.nav-content { display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 30rpx;}
+.nav-left, .nav-right { width: 140rpx; display: flex; align-items: center; }
+.nav-right { justify-content: flex-end; }
+.nav-title { flex: 1; text-align: center; font-size: 34rpx; font-weight: bold; }
+.back-btn { width: 60rpx; height: 100%; display: flex; align-items: center; }
+.chevron-left { width: 20rpx; height: 20rpx; border-top: 5rpx solid #000; border-left: 5rpx solid #000; transform: rotate(-45deg); border-top-left-radius: 4rpx;}
+.import-txt { font-size: 28rpx; color: #8E8E93; }
+
+.tab-scroll { width: 100%; border-bottom: 1rpx solid #f2f2f7; }
+.tab-list { display: inline-flex; padding: 10rpx; }
+.tab-item { padding: 16rpx 30rpx; font-size: 30rpx; font-weight: 500; color: #8E8E93; white-space: nowrap; }
+.tab-active { color: #34C759; font-weight: bold; position: relative;}
+.tab-active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40rpx; height: 6rpx; background: #34C759; border-radius: 4rpx; }
+
+.grid-scroll { flex: 1; padding-bottom: calc(160rpx + env(safe-area-inset-bottom)); }
+.grid-container { display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 50rpx; padding: 40rpx 20rpx; }
+.grid-item { display: flex; flex-direction: column; align-items: center; }
+.icon-box { width: 110rpx; height: 110rpx; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 16rpx; }
+.icon-mock { font-size: 40rpx; font-weight: bold; }
+.item-title { font-size: 26rpx; color: #333; }
+
+/* 底部绿色大按钮 */
+.bottom-bar { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #fff; padding: 24rpx 40rpx calc(24rpx + env(safe-area-inset-bottom)) 40rpx; box-sizing: border-box; box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.05); z-index: 99;}
+.btn-custom { width: 100%; height: 88rpx; background-color: #8AFA84; /* 图上的浅绿色 */ color: #000; font-size: 32rpx; font-weight: bold; display: flex; justify-content: center; align-items: center; border-radius: 44rpx; }

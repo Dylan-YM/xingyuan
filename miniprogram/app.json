@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/import/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/template/index",
+    "pages/create/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

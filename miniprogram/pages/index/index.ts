@@ -10,7 +10,8 @@ Page({
     totalScore: 0,
     dates: [] as CalendarDay[],
     categories: [] as any[],
-    currentDateStr: ''
+    currentDateStr: '',
+    showAddMenu: false
   },
 
   onLoad() {
@@ -136,6 +137,21 @@ Page({
 
   // 悬浮加号点击，跳转导入页 (必须带上当前的日期过去！)
   onAddTap() {
+    showAddMenu: !this.data.showAddMenu
+    // wx.navigateTo({
+    //   url: `/pages/import/index?date=${this.data.currentDateStr}`
+    // });
+  },navToCreate() {
+    // 跳转前先把菜单关掉，体验更好
+    this.setData({ showAddMenu: false }); 
+    wx.navigateTo({
+      url: `/pages/template/index` // 跳转到第二步的选择模板页
+    });
+  },
+
+  // 4. 菜单项：去目标库导入（带上当前日期）
+  navToImport() {
+    this.setData({ showAddMenu: false });
     wx.navigateTo({
       url: `/pages/import/index?date=${this.data.currentDateStr}`
     });
@@ -161,5 +177,67 @@ Page({
         }
       }
     });
+  },
+  onLongPressTask(e: WechatMiniprogram.TouchEvent) {
+    // 1. 获取点击的索引
+    const cidx = e.currentTarget.dataset.cidx;
+    const tidx = e.currentTarget.dataset.tidx;
+    
+    // 防错：确保索引存在
+    if (cidx === undefined || tidx === undefined) return;
+
+    const categories = this.data.categories;
+    const task = categories[cidx].tasks[tidx];
+
+    // 震动反馈
+    wx.vibrateShort({ type: 'medium' });
+
+    wx.showActionSheet({
+      itemList: ['删除任务：' + task.title],
+      itemColor: '#FF3B30',
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          // 执行删除
+          this.executeDelete(cidx, tidx);
+        }
+      }
+    });
+  },
+
+  /**
+   * 执行实际的删除与数据同步逻辑
+   */
+  executeDelete(cidx: number, tidx: number) {
+    let categories = this.data.categories;
+    const task = categories[cidx].tasks[tidx];
+
+    // 1. 积分联动逻辑：如果删除的是已经打过分的任务，需要扣除/返还积分
+    if (task.rating > 0) {
+      let currentTotal = StorageManager.getTotalStars();
+      if (categories[cidx].name === '批评') {
+        // 删掉已打分的“批评”，积分加回来
+        currentTotal += task.rating;
+      } else {
+        // 删掉已打分的奖励，积分扣除
+        currentTotal -= task.rating;
+      }
+      StorageManager.setTotalStars(currentTotal);
+      this.setData({ totalScore: currentTotal });
+    }
+
+    // 2. 从内存数组中删除
+    categories[cidx].tasks.splice(tidx, 1);
+    
+    // 3. 更新分类数量显示 (count)
+    categories[cidx].count = categories[cidx].tasks.length;
+
+    // 4. 持久化存储：保存到当前日期的本地缓存
+    StorageManager.save(categories, this.data.currentDateStr);
+
+    // 5. 更新 UI
+    this.setData({ categories });
+
+    wx.showToast({ title: '已删除', icon: 'success' });
   }
+  // ... 其余 onRate 等代码保持不变 ...
 });

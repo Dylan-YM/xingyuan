@@ -1,5 +1,33 @@
 <view class="page-container">
+  <view class="half-screen-mask" wx:if="{{showAddMenu}}"></view>
+<view class="half-screen-menu {{showAddMenu ? 'show' : ''}}">
+  <view class="menu-header">
+    <text class="menu-title">写任务</text>
+    <view class="date-picker-mini">〈 5月9日 〉</view>
+  </view>
   
+  <view class="ai-input-box">
+    <input placeholder="写下今日重要任务" />
+    <view class="ai-btn">AI识别</view>
+  </view>
+
+  <view class="menu-grid">
+    <view class="menu-item" bindtap="navToCreate">
+      <view class="menu-icon flag"></view>
+      <text>添加目标</text>
+    </view>
+    <view class="menu-item" bindtap="navToImport">
+      <view class="menu-icon download"></view>
+      <text>导入目标</text>
+    </view>
+    <view class="menu-item">
+      <view class="menu-icon heart"></view>
+      <text>添加心愿</text>
+    </view>
+  </view>
+  
+  <!-- <view class="close-btn" bindtap="toggleAddMenu">×</view> -->
+</view>
  <view class="header-section" style="padding-top: {{paddingTop}}px;">
     
     <view class="user-row">
@@ -54,7 +82,8 @@
       </view>
 
      <view class="task-list" wx:if="{{item.expanded}}">
-        <view class="task-card" wx:for="{{item.tasks}}" wx:for-item="task" wx:for-index="tIdx" wx:key="title">
+        <view class="task-card" wx:for="{{item.tasks}}" bindlongpress="onLongPressTask" wx:for-item="task" wx:for-index="tIdx" wx:key="title" data-cidx="{{cIdx}}" 
+      data-tidx="{{tIdx}}">
           
           <view class="card-left">
             <view class="icon-circle" style="background-color: {{task.iconColor}};">

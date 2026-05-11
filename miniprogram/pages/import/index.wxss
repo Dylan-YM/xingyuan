@@ -108,16 +108,16 @@ page {
 /* --- 网格列表 --- */
 .grid-scroll {
   flex: 1;
-  padding-bottom: 120rpx; /* 为底部栏留空间 */
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 一行四列 */
+  grid-template-columns: repeat(4, 1fr);
   row-gap: 50rpx;
-  padding: 40rpx 20rpx;
+  padding: 40rpx 20rpx 20rpx 20rpx; /* 底部间距调小 */
 }
-
 .grid-item {
   display: flex;
   flex-direction: column;

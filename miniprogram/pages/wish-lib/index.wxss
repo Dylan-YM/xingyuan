@@ -1,0 +1,31 @@
+page { background: #fff; height: 100vh; display: flex; flex-direction: column; }
+.page-container { display: flex; flex-direction: column; height: 100%; }
+
+/* 导航栏 */
+.nav-content { display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 30rpx;}
+.nav-left, .nav-right { width: 140rpx; display: flex; align-items: center; }
+.nav-right { justify-content: flex-end; }
+.nav-title { flex: 1; text-align: center; font-size: 34rpx; font-weight: bold; }
+.back-btn { width: 60rpx; height: 100%; display: flex; align-items: center; }
+.chevron-left { width: 20rpx; height: 20rpx; border-top: 5rpx solid #000; border-left: 5rpx solid #000; transform: rotate(-45deg); border-top-left-radius: 4rpx;}
+
+/* Tabs 分类 */
+.tab-scroll { white-space: nowrap; height: 88rpx; border-bottom: 1rpx solid #F2F2F7; }
+.tab-list { display: flex; padding: 0 20rpx; height: 100%; align-items: center; }
+.tab-item { padding: 0 30rpx; font-size: 30rpx; color: #8E8E93; position: relative; height: 100%; display: flex; align-items: center; transition: all 0.2s;}
+.tab-item.active { color: #34C759; font-weight: bold; font-size: 32rpx; }
+.tab-line { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40rpx; height: 6rpx; background: #34C759; border-radius: 4rpx; }
+
+/* 网格列表 */
+.wish-content { flex: 1; padding: 40rpx 30rpx; box-sizing: border-box; }
+.wish-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50rpx 20rpx; }
+
+.wish-item { display: flex; flex-direction: column; align-items: center; }
+
+/* 图标容器与图片 */
+.icon-box { width: 130rpx; height: 130rpx; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 16rpx; }
+.real-icon { width: 85rpx; height: 85rpx; }
+.fallback-text { font-size: 50rpx; font-weight: bold; }
+
+.wish-name { font-size: 26rpx; color: #333; margin-bottom: 8rpx; font-weight: 500;}
+.wish-price .star { font-size: 26rpx; color: #FFCC00; }

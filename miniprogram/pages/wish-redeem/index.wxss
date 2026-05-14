@@ -1,0 +1,104 @@
+page { background-color: #F8F9FA; font-family: sans-serif; }
+.page-container { display: flex; flex-direction: column; height: 100vh; padding: 20rpx; box-sizing: border-box; }
+
+/* 用户信息 */
+.header { display: flex; align-items: center; margin-bottom: 30rpx; }
+.user-info { display: flex; align-items: center; }
+.avatar { width: 80rpx; height: 80rpx; border-radius: 50%; margin-right: 16rpx; }
+.user-name { font-size: 36rpx; font-weight: bold; }
+.arrow-down { font-size: 20rpx; color: #8E8E93; margin-left: 8rpx; }
+
+/* 统计卡片区 */
+/* --- 顶部统计卡片区 --- */
+.stats-section { 
+    display: flex; 
+    justify-content: space-between; /* 让左右两端贴边对齐 */
+    align-items: center;            /* 💡 核心修复：让左右两边严格垂直居中对齐 */
+    margin-bottom: 50rpx; 
+    padding: 0 20rpx;
+  }
+.stats-left { width: 45%; display: flex; flex-direction: column; gap: 20rpx; }
+.stat-card { display: flex; align-items: center; padding: 20rpx; border-radius: 30rpx; }
+.yellow-bg { background-color: #FFF9E6; }
+.green-bg { background-color: #E8FAEA; }
+.stat-icon { font-size: 40rpx; margin-right: 16rpx; }
+.stat-label { font-size: 24rpx; color: #666; display: block; }
+.stat-num { font-size: 32rpx; font-weight: bold; }
+
+/* 罐子区 */
+/* 右侧剩余区 */
+.jar-section { 
+    padding: 20rpx; /* 💡 增加内边距，让点击区域变大 */
+  min-width: 150rpx; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;    /* 让上下文字居中对齐 */
+    justify-content: center; 
+  }
+.jar-box { text-align: center; }
+.jar-img { width: 220rpx; height: 220rpx; }
+.jar-label { font-size: 22rpx; color: #8E8E93; margin-top: -40rpx; }
+.jar-count { font-size: 44rpx; font-weight: 900; color: #FF9500; }
+
+/* 筛选排序 */
+.filter-bar { display: flex; align-items: center; gap: 30rpx; padding: 20rpx 0; border-bottom: 2rpx solid #F2F2F7; margin-bottom: 20rpx; }
+.filter-item { font-size: 26rpx; color: #8E8E93; }
+.add-btn-mini { width: 50rpx; height: 50rpx; background: #000; color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto; }
+
+/* 心愿卡片网格 */
+.wish-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24rpx; }
+.wish-card { background: #fff; border-radius: 32rpx; padding: 20rpx; position: relative; box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.03); }
+.card-price { position: absolute; top: 10rpx; right: 20rpx; z-index: 10; display: flex; align-items: center; }
+.price-star { font-size: 24rpx; }
+.price-num { font-size: 28rpx; font-weight: bold; color: #FF9500; }
+
+.card-body { width: 100%; height: 240rpx; border-radius: 24rpx; display: flex; justify-content: center; align-items: center; margin-bottom: 20rpx; }
+.wish-img { width: 80%; height: 80%; }
+
+.card-footer { text-align: center; }
+.wish-title { font-size: 28rpx; font-weight: 600; color: #333; margin-bottom: 16rpx; display: block; }
+
+/* 兑换按钮 */
+.redeem-btn { width: 140rpx; height: 60rpx; background: #8AFA84; color: #000; font-size: 26rpx; font-weight: bold; border-radius: 30rpx; display: flex; justify-content: center; align-items: center; margin: 0 auto; }
+
+/* 进度条样式 */
+.progress-box { padding: 0 10rpx; }
+.progress-bar { width: 100%; height: 12rpx; background: #F2F2F7; border-radius: 6rpx; overflow: hidden; margin-bottom: 8rpx; }
+.progress-inner { height: 100%; background: #FFCC00; border-radius: 6rpx; }
+.progress-txt { font-size: 20rpx; color: #C7C7CC; }
+.progress-box {
+    width: 100%;
+    margin-top: 10rpx;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 12rpx;
+    background-color: #E5E5EA;
+    border-radius: 6rpx;
+    overflow: hidden;
+    margin-bottom: 8rpx;
+  }
+  
+  .progress-inner {
+    height: 100%;
+    background: linear-gradient(90deg, #34C759, #32D74B); /* 绿色渐变 */
+    transition: width 0.3s ease; /* 增加一个动画效果，星星增加时条子会滑过去 */
+  }
+  
+  .progress-txt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .progress-txt {
+    font-size: 22rpx;
+    color: #8E8E93;
+  }
+  
+  .progress-status {
+    font-size: 22rpx;
+    font-weight: bold;
+    color: #FF9500; /* 橙色提醒，更有紧迫感 */
+  }

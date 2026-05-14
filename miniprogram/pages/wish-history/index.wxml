@@ -1,0 +1,39 @@
+<view class="page-container">
+  <view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="onBack">
+        <view class="back-btn">
+          <view class="chevron-left"></view>
+        </view>
+      </view>
+      
+      <text class="nav-title">兑换账单</text>
+      <view class="nav-right"></view>
+    </view>
+  </view>
+
+  <scroll-view class="history-scroll" scroll-y>
+    <view class="history-list" wx:if="{{historyList.length > 0}}">
+      
+      <view class="history-item" wx:for="{{historyList}}" wx:key="index">
+        <view class="item-icon">🛍️</view>
+        
+        <view class="item-info">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-time">{{item.date}} {{item.time}}</text>
+        </view>
+        
+        <view class="item-data">
+          <text class="item-cost">{{item.amount}} ⭐</text>
+          <text class="item-balance">剩余: {{item.balance !== undefined ? item.balance : '--'}}</text>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="empty-tip" wx:else>
+      <text class="empty-icon">🧾</text>
+      <text class="empty-text">还没有兑换记录哦~</text>
+    </view>
+  </scroll-view>
+</view>

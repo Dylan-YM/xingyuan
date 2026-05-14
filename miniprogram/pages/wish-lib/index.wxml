@@ -1,0 +1,42 @@
+<view class="page-container">
+<view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="onBack">
+        <view class="back-btn">
+          <view class="chevron-left"></view>
+        </view>
+      </view>
+      
+      <text class="nav-title">心愿库</text>
+      <view class="nav-right"></view>
+    </view>
+  </view>
+  <scroll-view class="tab-scroll" scroll-x show-scrollbar="{{false}}">
+    <view class="tab-list">
+      <view class="tab-item {{currentTab === item ? 'active' : ''}}" 
+            wx:for="{{tabs}}" wx:key="*this" 
+            bindtap="onTabClick" data-tab="{{item}}">
+        {{item}}
+        <view class="tab-line" wx:if="{{currentTab === item}}"></view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <scroll-view class="wish-content" scroll-y>
+    <view class="wish-grid">
+      <view class="wish-item" wx:for="{{displayWishes}}" wx:key="title" bindtap="onItemClick" data-index="{{index}}">
+        
+        <view class="icon-box" style="background-color: {{item.color || '#F0FDF4'}};">
+          <image class="real-icon" src="{{item.image}}" mode="aspectFit" wx:if="{{item.image}}"></image>
+          <text class="fallback-text" style="color: {{item.textColor || '#34C759'}};" wx:else>{{item.title[0]}}</text>
+        </view>
+        
+        <text class="wish-name">{{item.title}}</text>
+        <view class="wish-price">
+          <text class="star">⭐</text>
+        </view>
+        
+      </view>
+    </view>
+  </scroll-view>
+</view>

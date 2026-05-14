@@ -1,0 +1,77 @@
+<view class="page-container">
+  <view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-left" bindtap="onBack">
+        <view class="back-btn">
+          <view class="chevron-left"></view>
+        </view>
+      </view>
+      
+      <text class="nav-title">添加心愿</text>
+      <view class="nav-right"></view>
+    </view>
+  </view>
+
+  <scroll-view class="form-scroll" scroll-y>
+    <view class="header-row">
+      <view class="photo-placeholder" style="background-color: {{image ? color : '#F2F2F7'}};">
+        <image wx:if="{{image}}" src="{{image}}" mode="aspectFit" style="width: 70rpx; height: 70rpx;"></image>
+        <icon wx:else type="camera" size="24" color="#8E8E93" />
+      </view>
+      <view class="lib-capsule" bindtap="onNavToLib">心愿库 〉</view>
+    </view>
+
+    <view class="main-form-group">
+      <view class="name-row">
+        <input class="name-input" placeholder="心愿名称" value="{{title}}" bindinput="onTitleInput" />
+        <picker mode="selector" range="{{units}}" bindchange="onUnitChange">
+          <view class="unit-picker">{{unit}} ∨</view>
+        </picker>
+      </view>
+
+      <view class="step-item">
+        <view class="label-group"><text>单价</text><text class="star-mini">🌟</text></view>
+        <view class="stepper">
+          <view class="step-btn" bindtap="changePrice" data-val="-1">－</view>
+          <input class="step-input" type="number" value="{{price}}" bindinput="onPriceInput"  bindblur="onPriceBlur"/>
+          <view class="step-btn" bindtap="changePrice" data-val="1">＋</view>
+        </view>
+      </view>
+
+      <view class="step-item">
+        <text class="label">数量</text>
+        <view class="stepper">
+          <view class="step-btn" bindtap="changeQty" data-val="-1">－</view>
+<input class="step-input" type="number" value="{{quantity}}" bindinput="onQtyInput" bindblur="onQtyBlur" />
+          <view class="step-btn" bindtap="changeQty" data-val="1">＋</view>
+        </view>
+      </view>
+
+      <view class="summary-card" wx:if="{{title}}">
+        <view class="sum-left">
+          <view class="sum-icon" style="background-color: {{color || '#E8FAEA'}};">
+             <image class="sum-real-img" src="{{image}}" mode="aspectFit" wx:if="{{image}}"></image>
+             <text wx:else>{{title[0]}}</text>
+          </view>
+          <view class="sum-info">
+            <text class="sum-title">{{title}}</text>
+            <text class="sum-detail">/ 单价 ⭐{{price}} 数量 {{quantity}}</text>
+          </view>
+        </view>
+        <view class="sum-right">
+          <text class="sum-total-label">共</text>
+          <text class="sum-total-star">⭐ {{price * quantity}}</text>
+        </view>
+      </view>
+
+      <view class="desc-row">
+        <input class="desc-input" placeholder="+ 添加心愿描述" value="{{description}}" bindinput="onDescInput" placeholder-class="desc-placeholder" />
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <view class="bottom-area">
+    <view class="btn-submit" bindtap="onAdd">添加</view>
+  </view>
+</view>

@@ -1,0 +1,75 @@
+<view class="page-container">
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="user-info">
+      <image class="avatar" src="/assets/avatar.png" />
+      <view class="name-box">
+        <text class="user-name">Ryan</text>
+        <text class="arrow-down">▼</text>
+      </view>
+    </view>
+  </view>
+
+<view class="stats-section">
+    <view class="stats-left">
+      <view class="stat-card green-bg" bindtap="onNavToHistory">
+        <view class="stat-icon">✅</view>
+        <view class="stat-text">
+          <text class="stat-label">已兑换</text>
+          <text class="stat-num">{{redeemedCount || 0}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="jar-section" bindtap="onScoreTap">
+      <view class="jar-label">剩余积分</view>
+      <view class="jar-count">{{totalStars}}</view>
+    </view>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item">所有宝贝 ▼</view>
+    <view class="filter-item">默认排序 ▼</view>
+    <view class="add-btn-mini"  bindtap="onAddWish">+</view>
+  </view>
+
+  <scroll-view class="wish-list" scroll-y>
+    <view class="wish-grid">
+      <view class="wish-card" wx:for="{{wishes}}" wx:key="id" bindlongpress="onLongPressWish" 
+            data-index="{{index}}">
+        <view class="card-price">
+          <text class="price-star">⭐</text>
+          <text class="price-num">{{item.price}}</text>
+        </view>
+
+        <view class="card-body" style="background-color: {{item.color}};">
+          <image class="wish-img" src="{{item.img}}" mode="aspectFit" />
+        </view>
+        
+        <view class="card-footer">
+  <text class="wish-title">{{item.title}}</text>
+  
+  <view wx:if="{{totalStars >= item.price}}" 
+        class="redeem-btn" 
+        bindtap="onRedeem" 
+        data-index="{{index}}">
+    立即兑换
+  </view>
+  
+  <view wx:else class="progress-box">
+    <view class="progress-bar">
+      <view class="progress-inner" 
+            style="width: {{(totalStars / item.price) * 100}}%">
+      </view>
+    </view>
+    <view class="progress-txt-row">
+      <text class="progress-txt">{{totalStars}} / {{item.price}}</text>
+      <text class="progress-status">还差{{item.price - totalStars}}⭐</text>
+    </view>
+  </view>
+  
+  </view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

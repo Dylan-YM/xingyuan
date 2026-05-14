@@ -7,7 +7,8 @@ export interface ScoreLog {
     amount: number;     // 变化值 (如 +3, -2)
     date: string;       // 日期 (2024-05-09)
     time: string;       // 精确时间 (10:30)
-    type: 'add' | 'sub';// 增加还是减少
+    type: 'add' | 'sub'  | 'admin';// 增加还是减少
+    balance:number;
   }
 export default class StorageManager {
     
@@ -112,6 +113,42 @@ static addGlobalTask(categoryName: string, taskItem: { title: string, iconColor:
       console.error("全局同步目标失败", e);
     }
   }
+/**
+   * 💡 加载“我的心愿”列表
+   */
+static loadActiveWishes(): any[] {
+  return wx.getStorageSync('StarShine_ActiveWishes') || [];
+}
 
+/**
+ * 💡 保存心愿列表
+ */
+static saveActiveWishes(wishes: any[]) {
+  wx.setStorageSync('StarShine_ActiveWishes', wishes);
+}
+
+/**
+ * 💡 添加单个心愿（防重复）
+ */
+static addWish(wish: any) {
+  let wishes = this.loadActiveWishes();
+  const isExist = wishes.some(w => w.title === wish.title);
+  if (!isExist) {
+    // 完善心愿数据模型
+    const newWish = {
+      id: Date.now(),
+      title: wish.title,
+      price: wish.price || 10,
+      color: wish.color || '#EBFBFF',
+      type: wish.type || 'instant',
+      current: 0,
+      ...wish
+    };
+    wishes.push(newWish);
+    this.saveActiveWishes(wishes);
+    return true;
+  }
+  return false;
+}
 
 }

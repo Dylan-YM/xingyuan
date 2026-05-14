@@ -4,11 +4,35 @@
     "pages/import/index",
     "pages/logs/index",
     "pages/template/index",
-    "pages/create/index"
+    "pages/create/index",
+    "pages/wish-create/index",
+    "pages/wish-lib/index",
+    "pages/wish-redeem/index",
+    "pages/wish-history/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#8E8E93",
+    "selectedColor": "#34C759",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "目标",
+        "iconPath": "assets/tabbar/mubiao.png",
+        "selectedIconPath": "assets/tabbar/mubiao_active.png"
+      },
+      {
+        "pagePath": "pages/wish-redeem/index",
+        "text": "心愿",
+        "iconPath": "assets/tabbar/xinyuandan.png",
+        "selectedIconPath": "assets/tabbar/xinyuandan_active.png"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

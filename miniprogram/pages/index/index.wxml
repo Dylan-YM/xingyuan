@@ -67,11 +67,22 @@
           <view class="card-right">
             <text class="status-face {{item.name === '批评' ? 'face-red' : 'face-gray'}}">☺</text>
             
-            <view class="star-group">
-              <text class="star {{task.rating >= 1 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="1">★</text>
-              <text class="star {{task.rating >= 2 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="2">★</text>
-              <text class="star {{task.rating >= 3 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="3">★</text>
-            </view>
+           <view class="star-group" 
+      catchlongpress="onStarLongPressTask" 
+      data-cidx="{{cIdx}}" 
+      data-tidx="{{tIdx}}" 
+      data-title="{{task.title}}" 
+      data-stars="{{task.rating}}">
+  
+  <text class="star {{task.rating >= 1 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" 
+        catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="1">★</text>
+  
+  <text class="star {{task.rating >= 2 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" 
+        catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="2">★</text>
+  
+  <text class="star {{task.rating >= 3 ? (item.name === '批评' ? 'star-red' : 'star-yellow') : 'star-gray'}}" 
+        catchtap="onRate" data-cidx="{{cIdx}}" data-tidx="{{tIdx}}" data-val="3">★</text>
+</view>
           </view>
           
         </view>

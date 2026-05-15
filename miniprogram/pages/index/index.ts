@@ -116,7 +116,8 @@ if (isCriticism) {
     amount: -scoreVal,
     date: this.data.currentDateStr,
     time: timeStr,
-    type: 'sub'
+    type: 'sub', // 批评扣分用 sub 正确
+    balance: newTotal
   });
 } else {
   newTotal += scoreVal;
@@ -125,7 +126,8 @@ if (isCriticism) {
     amount: scoreVal,
     date: this.data.currentDateStr,
     time: timeStr,
-    type: 'add'
+    type: 'add', // 💡 修复：打分奖励必须是 add！
+    balance: newTotal
   });
 }
 
@@ -212,12 +214,73 @@ if (isCriticism) {
           this.executeDelete(cidx, tidx);
         }
       }
-    });
+    }); 
   },
+onStarLongPressTask(e: any) {
+  // 从 WXML 传来的 data-cidx 和 data-tidx 拿到具体任务
+  const { cidx, tidx, title, stars } = e.currentTarget.dataset;
+  const selectedDate = this.data.currentDateStr; 
 
-  /**
-   * 执行实际的删除与数据同步逻辑
-   */
+  if (!stars || stars <= 0) return;
+
+  wx.vibrateShort({ type: 'medium' });
+
+  wx.showModal({
+    title: '取消评分',
+    content: `确定要删除【${title}】的打分并退回积分吗？`,
+    confirmColor: '#FF3B30',
+    success: (res) => {
+      if (res.confirm) {
+        // 传入 cidx 和 tidx 方便后续直接更新 UI
+        this.executePreciseDelete(title, selectedDate, stars, cidx, tidx);
+      }
+    }
+  });
+},
+
+  executePreciseDelete(title: string, date: string, amount: number, cidx: number, tidx: number) {
+  let totalStars = StorageManager.getTotalStars();
+  let allLogs = wx.getStorageSync('StarShine_ScoreHistory') || [];
+
+  // 1. 寻找该条日志
+  const logIndex = allLogs.findIndex((log: any) => 
+    log.title === title && 
+    log.date === date && 
+    Math.abs(log.amount) === amount // 用绝对值匹配，兼容加分和扣分
+  );
+
+  console.log(title,date,amount);
+  if (logIndex === -1) {
+    wx.showToast({ title: '未找到账单', icon: 'none' });
+    return;
+  }
+
+  // 2. 更新总分（如果是加的分就减掉，如果是批评扣的分就加回来）
+  const logItem = allLogs[logIndex];
+  const newTotal = totalStars - logItem.amount; 
+  
+  // 3. 删除日志
+  allLogs.splice(logIndex, 1);
+  
+  // 4. 更新缓存
+  StorageManager.setTotalStars(newTotal);
+  wx.setStorageSync('StarShine_ScoreHistory', allLogs);
+
+  // 5. 重要：更新当前页面的任务状态并持久化保存
+  let categories = this.data.categories;
+  categories[cidx].tasks[tidx].rating = 0; // 星星清零
+  
+  StorageManager.save(categories, this.data.currentDateStr); // 保存任务状态
+
+  // 6. 更新 UI
+  this.setData({ 
+    categories, 
+    totalScore: newTotal 
+  });
+
+  wx.vibrateShort({ type: 'heavy' });
+  wx.showToast({ title: '已撤回' });
+},
   executeDelete(cidx: number, tidx: number) {
     let categories = this.data.categories;
     const task = categories[cidx].tasks[tidx];
@@ -249,6 +312,9 @@ if (isCriticism) {
     this.setData({ categories });
 
     wx.showToast({ title: '已删除', icon: 'success' });
-  }
-  // ... 其余 onRate 等代码保持不变 ...
+  },
+refreshTaskStatus(cidx: number, tidx: number) {
+  const key = `categories[${cidx}].tasks[${tidx}].rating`;
+  this.setData({ [key]: 0 });
+}
 });
